@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faculty Dashboard</title>
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('dashboard bg.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Top black div */
+.top-bar {
+    margin: 30px 40px 0 40px;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center; /* center heading and courses */
+}
+
+.top-bar h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Course row */
+.course-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.course-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 5px 0;
+}
+
+.course-container::-webkit-scrollbar { display: none; }
+
+.course-card {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    min-width: 100px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.course-card:hover { transform: scale(1.1); }
+.course-card.selected { background-color: rgba(0,150,255,0.5); }
+
+.section { font-weight: bold; }
+.course { font-size: 14px; color: #ddd; }
+
+/* Scroll buttons */
+.scroll-btn {
+    background-color: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+.scroll-btn:hover { background-color: rgba(255,255,255,0.4); }
+
+/* Monitor & Report buttons */
+.action-buttons {
+    display: none;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.action-buttons button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.monitor-btn { background-color: #007bff; }
+.report-btn { background-color: #28a745; }
+
+.monitor-btn:hover { background-color: #0056b3; }
+.report-btn:hover { background-color: #1e7e34; }
+
+/* Control panel below top-bar */
+.control-panel {
+    display: none;
+    margin: 20px 40px 0 40px;
+    padding: 15px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-panel button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.start-btn { background-color: green; }
+.stop-btn { background-color: red; }
+.secondary-btn { background-color: blue; }
+
+.control-panel button:hover { opacity: 0.8; }
+
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+    <h1>Courses Alloted</h1>
+    <div class="course-row">
+        <button class="scroll-btn" onclick="scrollLeft()">&#8592;</button>
+        <div class="course-container" id="courseContainer">
+            <div class="course-card" onclick="selectCourse(this)">
+                <div class="section">D2528</div>
+                <div class="course">CAP599</div>
+            </div>
+            <div class="course-card" onclick="selectCourse(this)">
+                <div class="section">D2528</div>
+                <div class="course">CAP601</div>
+            </div>
+            <div class="course-card" onclick="selectCourse(this)">
+                <div class="section">D2529</div>
+                <div class="course">CAP602</div>
+            </div>
+        </div>
+        <button class="scroll-btn" onclick="scrollRight()">&#8594;</button>
+    </div>
+
+    <div class="action-buttons" id="actionButtons">
+        <button class="monitor-btn" onclick="showStart()">Monitor</button>
+        <button class="report-btn" onclick="goToReport()">Report</button>
+    </div>
+</div>
+
+<!-- Control panel below top-bar -->
+<div class="control-panel" id="controlPanel">
+    <button class="start-btn" id="startBtn" style="display:none;" onclick="startMonitoring()">START</button>
+    <button class="secondary-btn" id="attendanceBtn" style="display:none;">ATTENDANCE</button>
+    <button class="secondary-btn" id="napBtn" style="display:none;">NAP TRAP</button>
+    <button class="secondary-btn" id="phoneBtn" style="display:none;">PHONE DETECTION</button>
+    <button class="secondary-btn" id="talkingBtn" style="display:none;">TALKING</button>
+    <button class="secondary-btn" id="attentionBtn" style="display:none;">ATTENTIVENESS</button>
+    <button class="stop-btn" id="endBtn" style="display:none;" onclick="endMonitoring()">END</button>
+</div>
+
+<script>
+const container = document.getElementById('courseContainer');
+const actionButtons = document.getElementById('actionButtons');
+const controlPanel = document.getElementById('controlPanel');
+const startBtn = document.getElementById('startBtn');
+let selectedCourse = null;
+
+function scrollLeft() { container.scrollBy({ left: -150, behavior: 'smooth' }); }
+function scrollRight() { container.scrollBy({ left: 150, behavior: 'smooth' }); }
+
+function selectCourse(card) {
+    if (selectedCourse) selectedCourse.classList.remove('selected');
+    card.classList.add('selected');
+    selectedCourse = card;
+    actionButtons.style.display = 'flex';
+    hideControlPanel(); // hide control panel if another course is selected
+}
+
+function goToReport() {
+    window.location.href = 'report.html';
+}
+
+function showStart() {
+    controlPanel.style.display = 'flex';
+    startBtn.style.display = 'block'; // show start button only when monitor clicked
+    hideMonitoringButtons(); // hide other buttons initially
+}
+
+function startMonitoring() {
+    // Start button remains visible
+    document.getElementById('attendanceBtn').style.display = 'block';
+    document.getElementById('napBtn').style.display = 'block';
+    document.getElementById('phoneBtn').style.display = 'block';
+    document.getElementById('talkingBtn').style.display = 'block';
+    document.getElementById('attentionBtn').style.display = 'block';
+    document.getElementById('endBtn').style.display = 'block';
+}
+
+function endMonitoring() {
+    hideMonitoringButtons();
+    // Start button remains visible
+}
+
+function hideMonitoringButtons() {
+    document.getElementById('attendanceBtn').style.display = 'none';
+    document.getElementById('napBtn').style.display = 'none';
+    document.getElementById('phoneBtn').style.display = 'none';
+    document.getElementById('talkingBtn').style.display = 'none';
+    document.getElementById('attentionBtn').style.display = 'none';
+    document.getElementById('endBtn').style.display = 'none';
+}
+
+function hideControlPanel() {
+    controlPanel.style.display = 'none';
+}
+</script>
+
+</body>
+</html>
