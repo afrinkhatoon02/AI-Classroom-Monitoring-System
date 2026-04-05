@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Page</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: url('report bg.png') no-repeat center center/cover;
+    }
+
+    .container {
+        width: 90%;
+        margin: 40px auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+    }
+
+    h1, h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #111;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #444;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #222;
+    }
+
+    tr:nth-child(even) {
+        background-color: #1a1a1a;
+    }
+
+    /* Leaderboard Top 3 */
+    .top3 {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        background-color: #111;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        width: 180px;
+        box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    .card img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border: 2px solid white;
+    }
+
+    .leaderboard-table {
+        margin-top: 20px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<!-- REPORT SECTION -->
+<div class="container">
+    <h1>D2528_CAP599</h1>
+    <h3>02-04-2026_14:07</h3>
+
+    <table>
+        <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Attendance</th>
+            <th>Sleeping </th>
+            <th>Phone Detection</th>
+            <th>Talking </th>
+            <th>Attentiveness Score</th>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>Fang Li</td>
+            <td>101</td>
+            <td>82%</td>
+            <td>2</td>
+            <td>1</td>
+            <td>3</td>
+            <td>70</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Dylan Wang</td>
+            <td>102</td>
+            <td>88%</td>
+            <td>2</td>
+            <td>1</td>
+            <td>3</td>
+            <td>93</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Bai Lu</td>
+            <td>103</td>
+            <td>85%</td>
+            <td>2</td>
+            <td>1</td>
+            <td>3</td>
+            <td>65</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Chen Zheyuan</td>
+            <td>104</td>
+            <td>97%</td>
+            <td>2</td>
+            <td>1</td>
+            <td>3</td>
+            <td>99</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Wang Peng</td>
+            <td>105</td>
+            <td>94%</td>
+            <td>2</td>
+            <td>1</td>
+            <td>3</td>
+            <td>95</td>
+        </tr>
+    </table>
+</div>
+
+<!-- LEADERBOARD SECTION -->
+<div class="container">
+    <h2>Leaderboard</h2>
+
+    <!-- Top 3 Students -->
+    <div class="top3">
+        <div class="card">
+            <img src="student1.jpg" alt="Student 1">
+            <h3>Rank 1</h3>
+            <p>Chen Zheyuan</p>
+            <p>Roll No: 104</p>
+        </div>
+
+        <div class="card">
+            <img src="student2.jpg" alt="Student 2">
+            <h3>Rank 2</h3>
+            <p>Wang Peng</p>
+            <p>Roll No: 105</p>
+        </div>
+
+        <div class="card">
+            <img src="student3.jpg" alt="Student 3">
+            <h3>Rank 3</h3>
+            <p>Dylan Wang</p>
+            <p>Roll No: 102</p>
+        </div>
+    </div>
+
+    <!-- Remaining Students -->
+    <table class="leaderboard-table">
+        <tr>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Attentiveness Score</th>
+        </tr>
+
+        <tr>
+            <td>Fang Li</td>
+            <td>101</td>
+            <td>70</td>
+        </tr>
+
+        <tr>
+            <td>Bai Lu</td>
+            <td>103</td>
+            <td>65</td>
+        </tr>
+
+    </table>
+</div>
+
+</body>
+</html>
