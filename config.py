@@ -1,0 +1,4 @@
+SUPABASE_URL = "https://cqfrdqlgjdvcpriatakh.supabase.co"
+
+
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZnJkcWxnamR2Y3ByaWF0YWtoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NDgzNTAsImV4cCI6MjA5MDMyNDM1MH0.j5LuQoCHL_1VLOXGhkHdWu4pNhr2oXpQebyFV18qiMw"
